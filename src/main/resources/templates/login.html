@@ -7,6 +7,10 @@
 <body class="login-wrapper">
     <div class="card login-box">
         <h2>Airtel Inventory</h2>
+        <!-- Display developers' names -->
+        <p style="text-align: center; font-size: 0.85rem; color: #666; margin-top: -10px;">
+            Developed by: <strong>Regis</strong> & <strong>Olive</strong>
+        </p>
         <div th:if="${error}" class="alert" th:text="${error}"></div>
         <form th:action="@{/login}" method="post">
             <div class="form-group">
@@ -17,6 +21,11 @@
             </div>
             <button type="submit" class="btn" style="width: 100%">Login</button>
         </form>
+        <!-- Optional hint for demo credentials -->
+        <p style="text-align: center; font-size: 0.75rem; margin-top: 15px;">
+            <P>Username: 24RP06444</P> 
+            <P>Password: 24RP11469</P>
+        </p>
     </div>
 </body>
 </html>
