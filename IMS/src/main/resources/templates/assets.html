@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Assets - Airtel IMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">Airtel Inventory System</a>
+        <div class="navbar-nav">
+            <a href="/">Dashboard</a>
+            <a href="/assets" class="active">Assets</a>
+            <a href="/assignments">Assignments</a>
+            <a href="/reports">Reports</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2>Device Assets</h2>
+            <a href="/assets/add" class="btn">Register New Asset</a>
+        </div>
+
+        <div th:if="${message}" class="alert" th:text="${message}"></div>
+
+        <div class="card">
+            <form th:action="@{/assets}" method="get" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <input type="text" name="search" th:value="${search}" class="form-control" placeholder="Search by tag, type, brand..." style="max-width: 400px;">
+                <button type="submit" class="btn">Search</button>
+                <a href="/assets" class="btn btn-secondary">Clear</a>
+            </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tag No.</th>
+                        <th>Type</th>
+                        <th>Brand/Model</th>
+                        <th>S/N</th>
+                        <th>Condition</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="asset : ${assets}">
+                        <td th:text="${asset.tagNumber}"></td>
+                        <td th:text="${asset.deviceType}"></td>
+                        <td th:text="${asset.brand + ' / ' + asset.model}"></td>
+                        <td th:text="${asset.serialNumber}"></td>
+                        <td th:text="${asset.conditionStatus}"></td>
+                        <td>
+                            <span th:class="'badge ' + ${#strings.toLowerCase(asset.status != null ? asset.status : 'available')}" th:text="${asset.status != null ? asset.status : 'Available'}"></span>
+                        </td>
+                        <td>
+                            <a th:href="@{'/assets/edit/' + ${asset.id}}" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.8rem;">Edit</a>
+                            <a th:if="${asset.status == null or asset.status == 'Available' or asset.status == 'Returned'}" th:href="@{'/assignments/issue/' + ${asset.id}}" class="btn" style="padding: 5px 10px; font-size: 0.8rem;">Issue</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

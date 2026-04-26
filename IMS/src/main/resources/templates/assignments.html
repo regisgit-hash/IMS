@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Assignments - Airtel IMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">Airtel Inventory System</a>
+        <div class="navbar-nav">
+            <a href="/">Dashboard</a>
+            <a href="/assets">Assets</a>
+            <a href="/assignments" class="active">Assignments</a>
+            <a href="/reports">Reports</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+<div class="container">
+    <h2>Asset Assignments</h2>
+    
+    <div th:if="${message}" class="alert" th:text="${message}"></div>
+
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Asset Tag</th>
+                    <th>Device</th>
+                    <th>Employee</th>
+                    <th>Department</th>
+                    <th>Issue Date</th>
+                    <th>Return Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="assignment : ${assignments}">
+                    <td th:text="${assignment.asset.tagNumber}"></td>
+                    <td th:text="${assignment.asset.deviceType + ' (' + assignment.asset.brand + ')'}"></td>
+                    <td th:text="${assignment.employeeName}"></td>
+                    <td th:text="${assignment.department}"></td>
+                    <td th:text="${assignment.assignedDate}"></td>
+                    <td th:text="${assignment.returnDate}"></td>
+                    <td>
+                        <span th:class="'badge ' + ${#strings.toLowerCase(assignment.status)}"
+                              th:text="${assignment.status}">
+                        </span>
+                    </td>
+                    <td>
+                        <!-- Return button -->
+                        <a th:if="${assignment.status == 'Active'}"
+                           th:href="@{'/assignments/return/' + ${assignment.id}}"
+                           class="btn"
+                           style="padding: 5px 10px; font-size: 0.8rem;">
+                            Return Asset
+                        </a>
+
+                        <!-- Delete button -->
+                        <a th:href="@{'/assignments/delete/' + ${assignment.id}}"
+                           class="btn btn-danger"
+                           style="padding: 5px 10px; font-size: 0.8rem; margin-left:5px;"
+                           onclick="return confirm('Are you sure you want to delete this assignment?');">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard - Airtel IMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">Airtel Inventory System</a>
+        <div class="navbar-nav">
+            <a href="/" class="active">Dashboard</a>
+            <a href="/assets">Assets</a>
+            <a href="/assignments">Assignments</a>
+            <a href="/reports">Reports</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Dashboard</h2>
+        <div class="grid">
+            <div class="card stat-card">
+                <h3>Total Assets</h3>
+                <h1 th:text="${totalAssets}">0</h1>
+            </div>
+            <div class="card stat-card">
+                <h3>Total Assignments</h3>
+                <h1 th:text="${totalAssignments}">0</h1>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
